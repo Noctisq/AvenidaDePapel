@@ -86,7 +86,7 @@ body {
 }
 
 .form {
-  margin: 70px 40px 40px 40px;
+  margin:40px 40px 40px 40px;
   position: absolute;
 }
 form {
@@ -143,7 +143,7 @@ div[class*="box"] {
 
 .box-3 {
   background-color: transparent;
-  margin-top: 70px;
+  margin-top: 30px;
 }
 
 .btn {

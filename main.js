@@ -1,41 +1,52 @@
 const sendEmail = async () => {
   let email = document.querySelector("#name").value;
+  let nombre = document.querySelector("#nombre").value;
   console.log(email);
-  if (validateEmail(email)) {
-    button.removeEventListener("click", sendEmail);
-    button.innerHTML = `<div class="sk-folding-cube">
-        <div class="sk-cube1 sk-cube"></div>
-        <div class="sk-cube2 sk-cube"></div>
-        <div class="sk-cube4 sk-cube"></div>
-        <div class="sk-cube3 sk-cube"></div>
-      </div>`;
-    let response = await fetch("http://192.168.0.11:3000/api/email", {
-      method: "post",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+  console.log(nombre);
+  if (nombre) {
+    if (validateEmail(email)) {
+      button.removeEventListener("click", sendEmail);
+      button.innerHTML = `<div class="sk-folding-cube">
+            <div class="sk-cube1 sk-cube"></div>
+            <div class="sk-cube2 sk-cube"></div>
+            <div class="sk-cube4 sk-cube"></div>
+            <div class="sk-cube3 sk-cube"></div>
+          </div>`;
 
-      body: JSON.stringify({
-        Usuario: email,
-      }),
-    });
-    console.log(response);
-    if (response.status == 200) {
-      button.innerHTML = ` 
-      <div class="success-checkmark">
-        <div class="check-icon">
-            <span class="icon-line line-tip"></span>
-            <span class="icon-line line-long"></span>
-            <div class="icon-circle"></div>
-            <div class="icon-fix"></div>
-        </div>
-    </div>`;
+
+      let response = await fetch("https://avenidadepapel.herokuapp.com/api/email", {
+        method: "post",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          Usuario: email,
+          Nombre: nombre,
+        }),
+      });
+      console.log(response);
+      if (response.status == 200) {
+        document.querySelector(".left").innerHTML = "<div class='adp'>Te hemos enviado un correo electrónico.</div>"
+        button.innerHTML = ` 
+          <div class="success-checkmark">
+            <div class="check-icon">
+                <span class="icon-line line-tip"></span>
+                <span class="icon-line line-long"></span>
+                <div class="icon-circle"></div>
+                <div class="icon-fix"></div>
+            </div>
+        </div>`;
+        
+      } else {
+        button.innerHTML = `Algo salió mal, inténtalo de nuevo`;
+      }
     } else {
-      button.innerHTML = `Algo salió mal, inténtalo de nuevo`;
+      alert("Introduce un correo válido.");
     }
-  } else {
-    alert("Introduce un correo válido.");
+  }else{
+      alert("Introduce tu nombre.")
   }
 };
 
